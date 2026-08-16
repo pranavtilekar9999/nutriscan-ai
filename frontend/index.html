@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriScan AI – Scan. Understand. Decide.</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <i class="fas fa-leaf"></i>
+            <span>NutriScan AI</span>
+        </div>
+        <div class="nav-links">
+            <a href="#home" class="active">Home</a>
+            <a href="#scan">Scan</a>
+            <a href="#profile">Health Profile</a>
+            <a href="#about">About</a>
+        </div>
+        <div class="auth-actions" id="authActions">
+            <button class="btn-auth" onclick="openAuthModal('login')">Sign in</button>
+        </div>
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+            <i class="fas fa-bars"></i>
+        </button>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#home" onclick="toggleMobileMenu()">Home</a>
+        <a href="#scan" onclick="toggleMobileMenu()">Scan</a>
+        <a href="#profile" onclick="toggleMobileMenu()">Health Profile</a>
+        <a href="#about" onclick="toggleMobileMenu()">About</a>
+    </div>
+
+    <div class="auth-modal" id="authModal" aria-hidden="true">
+        <div class="auth-dialog" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+            <button class="modal-close" onclick="closeAuthModal()" aria-label="Close">&times;</button>
+            <h2 id="authTitle">Welcome back</h2>
+            <p id="authSubtitle">Sign in to save your health profile.</p>
+            <form id="authForm" onsubmit="submitAuth(event)">
+                <div class="input-group" id="registerNameField">
+                    <label for="authName">Name</label>
+                    <input id="authName" type="text" autocomplete="name" placeholder="Your name">
+                </div>
+                <div class="input-group">
+                    <label for="authEmail">Email</label>
+                    <input id="authEmail" type="email" autocomplete="email" required placeholder="you@example.com">
+                </div>
+                <div class="input-group">
+                    <label for="authPassword">Password</label>
+                    <input id="authPassword" type="password" autocomplete="current-password" required minlength="8" placeholder="Minimum 8 characters">
+                </div>
+                <p class="auth-error" id="authError" role="alert"></p>
+                <button class="btn-primary btn-full" id="authSubmit" type="submit">Sign in</button>
+            </form>
+            <p class="auth-switch" id="authSwitch">New here? <button type="button" onclick="openAuthModal('register')">Create an account</button></p>
+        </div>
+    </div>
+
+    <!-- Home Section -->
+    <section id="home" class="section active">
+        <div class="hero">
+            <div class="hero-content">
+                <div class="badge">AI-Powered Nutrition</div>
+                <h1>Scan. Understand.<br><span class="gradient-text">Decide.</span></h1>
+                <p>Instantly know if a food product is right for you. No complex labels, no confusion—just clear, personalized recommendations.</p>
+                <div class="hero-buttons">
+                    <button class="btn-primary" onclick="navigateTo('scan')">
+                        <i class="fas fa-camera"></i> Scan Product
+                    </button>
+                    <button class="btn-secondary" onclick="navigateTo('profile')">
+                        <i class="fas fa-user"></i> Set Health Profile
+                    </button>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">10K+</span>
+                        <span class="stat-label">Products Analyzed</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">50+</span>
+                        <span class="stat-label">Languages</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">98%</span>
+                        <span class="stat-label">Accuracy</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="phone-mockup">
+                    <div class="phone-screen">
+                        <div class="mockup-header">
+                            <i class="fas fa-arrow-left"></i>
+                            <span>Scan Product</span>
+                            <i class="fas fa-ellipsis-v"></i>
+                        </div>
+                        <div class="mockup-camera">
+                            <div class="scan-frame">
+                                <div class="scan-line"></div>
+                            </div>
+                            <p class="scan-text">Align barcode within frame</p>
+                        </div>
+                        <div class="mockup-result">
+                            <div class="result-badge yes">YES</div>
+                            <p class="result-freq">Up to 2 times per week</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+                <h3>Instant Analysis</h3>
+                <p>Get results in seconds with our AI-powered scanning technology.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-heart-pulse"></i></div>
+                <h3>Personalized</h3>
+                <p>Recommendations tailored to your health conditions and dietary needs.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-shield-halved"></i></div>
+                <h3>Health First</h3>
+                <p>Identify hidden sugars, harmful additives, and processing levels.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-language"></i></div>
+                <h3>Multilingual</h3>
+                <p>Access nutrition insights in your preferred language.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scan Section -->
+    <section id="scan" class="section">
+        <div class="scan-container">
+            <h2><i class="fas fa-barcode"></i> Scan Your Product</h2>
+            <p class="subtitle">Enter a barcode or paste ingredients to get instant analysis</p>
+
+            <div class="scan-tabs">
+                <button class="scan-tab" id="cameraScanTab" onclick="switchScanTab('camera', event)">
+                    <i class="fas fa-camera"></i> Camera
+                </button>
+                <button class="scan-tab active" id="barcodeScanTab" onclick="switchScanTab('barcode', event)">
+                    <i class="fas fa-barcode"></i> Barcode
+                </button>
+                <button class="scan-tab" id="ingredientsScanTab" onclick="switchScanTab('ingredients', event)">
+                    <i class="fas fa-list"></i> Ingredients
+                </button>
+            </div>
+
+            <!-- Barcode Scan -->
+            <div class="scan-panel" id="cameraPanel">
+                <div class="camera-scanner">
+                    <video id="barcodeVideo" playsinline muted></video>
+                    <p id="cameraMessage">Use your device camera to align a food barcode inside the frame.</p>
+                </div>
+                <button class="btn-primary btn-full" id="startCameraButton" onclick="startCameraScanner()">
+                    <i class="fas fa-camera"></i> Start Camera Scanner
+                </button>
+                <button class="btn-secondary btn-full camera-stop" id="stopCameraButton" onclick="stopCameraScanner()">
+                    Stop scanner
+                </button>
+                <p class="hint">Camera scanning requires a modern browser and camera permission. You can always enter the code manually.</p>
+            </div>
+
+            <div class="scan-panel active" id="barcodePanel">
+                <div class="input-group">
+                    <label>Enter Barcode Number</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-barcode"></i>
+                        <input type="text" id="barcodeInput" inputmode="numeric" pattern="[0-9]*" placeholder="e.g., 8901234567890" maxlength="14">
+                    </div>
+                    <p class="hint">Enter any 8–14 digit product barcode. The app checks its local cache and the live Open Food Facts catalogue.</p>
+                </div>
+                <button class="btn-primary btn-full" onclick="analyzeBarcode()">
+                    <i class="fas fa-search"></i> Analyze Product
+                </button>
+            </div>
+
+            <!-- Ingredients Scan -->
+            <div class="scan-panel" id="ingredientsPanel">
+                <div class="input-group">
+                    <label>Product Name</label>
+                    <input type="text" id="manualProductName" placeholder="Enter product name">
+                </div>
+                <div class="input-group">
+                    <label>Paste Ingredients List</label>
+                    <textarea id="ingredientsInput" rows="6" placeholder="Wheat Flour, Sugar, Palm Oil, Salt..."></textarea>
+                </div>
+                <button class="btn-primary btn-full" onclick="analyzeIngredients()">
+                    <i class="fas fa-flask"></i> Analyze Ingredients
+                </button>
+            </div>
+
+            <!-- Loading State -->
+            <div class="loading-state" id="loadingState">
+                <div class="spinner"></div>
+                <p>Analyzing nutritional profile...</p>
+                <p class="loading-sub">Checking ingredients, additives, and health impact</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section id="result" class="section">
+        <div class="result-container">
+            <button class="btn-back" onclick="navigateTo('scan')">
+                <i class="fas fa-arrow-left"></i> Scan Another
+            </button>
+
+            <!-- Simple Result Card -->
+            <div class="simple-result" id="simpleResult">
+                <div class="product-header">
+                    <h3 id="resultProductName">Product Name</h3>
+                    <span class="product-brand" id="resultBrand">Brand</span>
+                </div>
+
+                <div class="verdict-card" id="verdictCard">
+                    <div class="verdict-icon" id="verdictIcon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="verdict-text" id="verdictText">YES</div>
+                    <div class="verdict-sub" id="verdictSub">You can consume this product</div>
+                </div>
+
+                <div class="quick-info">
+                    <div class="info-pill">
+                        <i class="fas fa-calendar-week"></i>
+                        <span id="frequencyText">Up to 2 times per week</span>
+                    </div>
+                    <div class="info-pill">
+                        <i class="fas fa-info-circle"></i>
+                        <span id="reasonText">Short reason here</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="label-completion" id="labelCompletion"></div>
+
+            <!-- Detailed Analysis Tabs -->
+            <div class="detail-section">
+                <div class="detail-tabs">
+                    <button class="detail-tab active" onclick="switchDetailTab('ingredients')">Ingredients</button>
+                    <button class="detail-tab" onclick="switchDetailTab('quantity')">Quantity</button>
+                    <button class="detail-tab" onclick="switchDetailTab('quality')">Quality</button>
+                    <button class="detail-tab" onclick="switchDetailTab('hazards')">Hazards</button>
+                </div>
+
+                <!-- Ingredients Tab -->
+                <div class="detail-panel active" id="ingredientsTab">
+                    <h4><i class="fas fa-flask"></i> Ingredient Analysis</h4>
+                    <div class="ingredients-list" id="ingredientsList"></div>
+                </div>
+
+                <!-- Quantity Tab -->
+                <div class="detail-panel" id="quantityTab">
+                    <h4><i class="fas fa-balance-scale"></i> Quantity Analysis</h4>
+                    <div class="quantity-grid" id="quantityGrid"></div>
+                </div>
+
+                <!-- Quality Tab -->
+                <div class="detail-panel" id="qualityTab">
+                    <h4><i class="fas fa-award"></i> Quality Assessment</h4>
+                    <div class="quality-score" id="qualityScore"></div>
+                    <div class="quality-details" id="qualityDetails"></div>
+                </div>
+
+                <!-- Hazards Tab -->
+                <div class="detail-panel" id="hazardsTab">
+                    <h4><i class="fas fa-triangle-exclamation"></i> Hazardous Impact Analysis</h4>
+                    <div class="hazards-list" id="hazardsList"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Health Profile Section -->
+    <section id="profile" class="section">
+        <div class="profile-container">
+            <h2><i class="fas fa-user-shield"></i> Your Health Profile</h2>
+            <p class="subtitle">Personalize your recommendations based on your health conditions</p>
+
+            <form id="healthProfileForm" onsubmit="saveHealthProfile(event)">
+                <div class="form-grid">
+                    <div class="input-group">
+                        <label>Your Name</label>
+                        <input type="text" id="profileName" placeholder="Enter your name">
+                    </div>
+                    <div class="input-group">
+                        <label>Age</label>
+                        <input type="number" id="profileAge" placeholder="Years" min="1" max="120">
+                    </div>
+                    <div class="input-group">
+                        <label>Gender</label>
+                        <select id="profileGender">
+                            <option value="">Select</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Weight (kg)</label>
+                        <input type="number" id="profileWeight" placeholder="kg" min="1" step="0.1">
+                    </div>
+                </div>
+
+                <div class="conditions-section">
+                    <h3>Health Conditions</h3>
+                    <p class="hint">Select all that apply for personalized warnings</p>
+
+                    <div class="conditions-grid">
+                        <label class="condition-card">
+                            <input type="checkbox" id="condDiabetes">
+                            <div class="condition-content">
+                                <i class="fas fa-droplet"></i>
+                                <span>Diabetes</span>
+                            </div>
+                        </label>
+                        <label class="condition-card">
+                            <input type="checkbox" id="condHypertension">
+                            <div class="condition-content">
+                                <i class="fas fa-heart-pulse"></i>
+                                <span>Hypertension</span>
+                            </div>
+                        </label>
+                        <label class="condition-card">
+                            <input type="checkbox" id="condHeart">
+                            <div class="condition-content">
+                                <i class="fas fa-heart-crack"></i>
+                                <span>Heart Disease</span>
+                            </div>
+                        </label>
+                        <label class="condition-card">
+                            <input type="checkbox" id="condObesity">
+                            <div class="condition-content">
+                                <i class="fas fa-weight-scale"></i>
+                                <span>Obesity</span>
+                            </div>
+                        </label>
+                        <label class="condition-card">
+                            <input type="checkbox" id="condCeliac">
+                            <div class="condition-content">
+                                <i class="fas fa-wheat-awn-circle-exclamation"></i>
+                                <span>Celiac / Gluten Intolerant</span>
+                            </div>
+                        </label>
+                        <label class="condition-card">
+                            <input type="checkbox" id="condKidney">
+                            <div class="condition-content">
+                                <i class="fas fa-kidney"></i>
+                                <span>Kidney Disease</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="dietary-section">
+                    <h3>Dietary Preferences</h3>
+                    <div class="preferences-grid">
+                        <label class="pref-card">
+                            <input type="radio" name="diet" value="none" checked>
+                            <span>No Restrictions</span>
+                        </label>
+                        <label class="pref-card">
+                            <input type="radio" name="diet" value="vegetarian">
+                            <span>Vegetarian</span>
+                        </label>
+                        <label class="pref-card">
+                            <input type="radio" name="diet" value="vegan">
+                            <span>Vegan</span>
+                        </label>
+                        <label class="pref-card">
+                            <input type="radio" name="diet" value="keto">
+                            <span>Keto / Low Carb</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary btn-full">
+                    <i class="fas fa-save"></i> Save Health Profile
+                </button>
+            </form>
+
+            <div class="profile-saved" id="profileSaved">
+                <i class="fas fa-circle-check"></i>
+                <h3>Profile Saved!</h3>
+                <p>Your recommendations will now be personalized.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="about-container">
+            <h2>About NutriScan AI</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>NutriScan AI empowers consumers to make healthier food choices without requiring nutritional expertise. By presenting simple recommendations first and detailed explanations only when requested, we make nutrition information accessible, understandable, and actionable.</p>
+
+                    <div class="about-features">
+                        <div class="about-feature">
+                            <i class="fas fa-bullseye"></i>
+                            <div>
+                                <h4>Our Mission</h4>
+                                <p>Build a healthier and more informed Bharat through technology.</p>
+                            </div>
+                        </div>
+                        <div class="about-feature">
+                            <i class="fas fa-brain"></i>
+                            <div>
+                                <h4>AI-Powered</h4>
+                                <p>Advanced algorithms analyze ingredients, nutrition, and processing levels.</p>
+                            </div>
+                        </div>
+                        <div class="about-feature">
+                            <i class="fas fa-universal-access"></i>
+                            <div>
+                                <h4>For Everyone</h4>
+                                <p>Designed for all ages and literacy levels with voice-assisted explanations.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-brand">
+            <i class="fas fa-leaf"></i>
+            <span>NutriScan AI</span>
+        </div>
+        <p>Building a healthier Bharat, one scan at a time.</p>
+        <p class="copyright"> 2026 NutriScan AI. All rights reserved.</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
